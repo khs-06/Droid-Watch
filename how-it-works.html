@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>How It Works - PhoneGuard</title>
+  <link rel="stylesheet" href="static/css/style.css"/>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-brand">📷 PhoneGuard</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="features.html">Features</a></li>
+      <li><a href="how-it-works.html" class="active">How It Works</a></li>
+      <li><a href="setup.html">Setup</a></li>
+      <li><a href="alerts.html">Alerts Log</a></li>
+    </ul>
+    <button class="nav-toggle" onclick="toggleMenu()">☰</button>
+  </nav>
+
+  <div class="page-header">
+    <h1>How It Works</h1>
+    <p>The full flow from setup to receiving alerts</p>
+  </div>
+
+  <section class="section">
+
+    <!-- FLOW DIAGRAM (simple HTML/CSS) -->
+    <h2 class="section-title">System Flow</h2>
+    <div class="flow-diagram">
+      <div class="flow-step">
+        <div class="flow-circle">1</div>
+        <div class="flow-label">Configure<br/>config.env</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-circle">2</div>
+        <div class="flow-label">Select ROI<br/>on Screen</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-circle">3</div>
+        <div class="flow-label">Start IP<br/>Webcam App</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-circle">4</div>
+        <div class="flow-label">Run<br/>Phone_Alert.py</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step flow-step-green">
+        <div class="flow-circle green">5</div>
+        <div class="flow-label">Alert Sent<br/>to Telegram</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- DETAILED STEPS -->
+    <h2 class="section-title">Step by Step</h2>
+    <div class="steps-detail">
+
+      <div class="step-detail-card">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <h3>Install & Configure</h3>
+          <p>Clone the repo and install all Python dependencies. Then open <code>config.env</code> and fill in:</p>
+          <ul>
+            <li><strong>CHAT_ID</strong> — Get this from @GetMyChatID_Bot on Telegram</li>
+            <li><strong>IP_CAMERA_URL</strong> — The stream URL from IP Webcam app (e.g. <code>http://192.168.x.x:8080/video</code>)</li>
+            <li><strong>ROI_START_POINT</strong> — Top-left corner of your detection zone</li>
+            <li><strong>ROI_END_POINT</strong> — Bottom-right corner of your detection zone</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step-detail-card">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <h3>Find Your ROI Coordinates</h3>
+          <p>Run <code>python ROI_point_finder.py</code>. A fullscreen screenshot appears as an overlay. Click and drag to draw a green rectangle around the area you want to monitor. The start and end coordinates are printed in the terminal — copy them into your <code>config.env</code> file.</p>
+        </div>
+      </div>
+
+      <div class="step-detail-card">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <h3>Start Telegram Bot</h3>
+          <p>Open Telegram and search for <strong>@CAMSEC_AlertBot</strong>. Press <strong>START</strong>. This allows the bot to send messages to your chat. If you don't do this step, alerts won't be delivered.</p>
+        </div>
+      </div>
+
+      <div class="step-detail-card">
+        <div class="step-num">04</div>
+        <div class="step-body">
+          <h3>Open IP Webcam on Your Phone</h3>
+          <p>Install the <strong>IP Webcam</strong> app on your Android phone. Open it and tap <em>"Start Server"</em>. Your phone will show an IP address and port — use this as your <code>IP_CAMERA_URL</code>. Make sure your phone and PC are on the same Wi-Fi network.</p>
+        </div>
+      </div>
+
+      <div class="step-detail-card">
+        <div class="step-num">05</div>
+        <div class="step-body">
+          <h3>Run the Main Script</h3>
+          <p>Run <code>python Phone_Alert.py</code>. A window opens showing your phone's live camera feed with a green ROI box drawn on it. The system is now actively monitoring.</p>
+          <div class="info-box">
+            💡 The script runs two things at once: the motion detection loop (in a background thread) and the Telegram bot listener (main thread).
+          </div>
+        </div>
+      </div>
+
+      <div class="step-detail-card">
+        <div class="step-num">06</div>
+        <div class="step-body">
+          <h3>Motion Detected → Alert Sent</h3>
+          <p>When the system detects persistent motion inside the ROI for 5+ consecutive frames, it:</p>
+          <ul>
+            <li>Saves a JPEG snapshot as <code>motion_alert.jpg</code></li>
+            <li>Sends it to your Telegram chat with a caption</li>
+            <li>Logs the event to <code>motion_alerts.db</code> with a timestamp</li>
+            <li>Waits 10 seconds before triggering another alert (cooldown)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step-detail-card">
+        <div class="step-num">07</div>
+        <div class="step-body">
+          <h3>Verify Config with /check</h3>
+          <p>At any time, type <code>/check</code> in the Telegram bot chat. It replies with your current camera URL, ROI coordinates, and Chat ID so you can confirm everything is configured correctly.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- HOW DETECTION WORKS -->
+    <h2 class="section-title">How Motion Detection Works</h2>
+    <div class="detection-explain">
+      <div class="detect-step">
+        <span class="detect-icon">🎥</span>
+        <p><strong>Read Frame</strong><br/>Captures each frame from the camera stream using OpenCV</p>
+      </div>
+      <div class="detect-arrow">↓</div>
+      <div class="detect-step">
+        <span class="detect-icon">✂️</span>
+        <p><strong>Crop ROI</strong><br/>Extracts only the region of interest from the full frame</p>
+      </div>
+      <div class="detect-arrow">↓</div>
+      <div class="detect-step">
+        <span class="detect-icon">🔲</span>
+        <p><strong>Background Subtraction</strong><br/>MOG2 algorithm compares current frame to the learned background</p>
+      </div>
+      <div class="detect-arrow">↓</div>
+      <div class="detect-step">
+        <span class="detect-icon">🔍</span>
+        <p><strong>Find Contours</strong><br/>Looks for moving blobs bigger than 5000px² (filters out noise)</p>
+      </div>
+      <div class="detect-arrow">↓</div>
+      <div class="detect-step detect-step-green">
+        <span class="detect-icon">🚨</span>
+        <p><strong>Trigger Alert</strong><br/>If motion persists for 5+ frames and cooldown has passed → send alert</p>
+      </div>
+    </div>
+
+  </section>
+
+  <footer>
+    <p>📷 PhoneGuard &nbsp;|&nbsp; MIT License &nbsp;|&nbsp; Built with Python & OpenCV</p>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="features.html">Features</a>
+      <a href="setup.html">Setup</a>
+      <a href="alerts.html">Alerts</a>
+    </div>
+  </footer>
+
+  <script src="static/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PhoneGuard - Motion Detection System</title>
+  <link rel="stylesheet" href="static/css/style.css"/>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-brand">📷 PhoneGuard</div>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="features.html">Features</a></li>
+      <li><a href="how-it-works.html">How It Works</a></li>
+      <li><a href="setup.html">Setup</a></li>
+      <li><a href="alerts.html">Alerts Log</a></li>
+    </ul>
+    <button class="nav-toggle" onclick="toggleMenu()">☰</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="tag">🔴 Live Detection System</span>
+      <h1>Phone Camera<br/>Motion Detection</h1>
+      <p>Monitor your space using your phone's camera. Get instant Telegram alerts with a snapshot whenever motion is detected in your selected zone.</p>
+      <div class="hero-btns">
+        <a href="setup.html" class="btn-green">Get Started</a>
+        <a href="how-it-works.html" class="btn-outline">How It Works</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="camera-box">
+        <div class="camera-screen">
+          <div class="roi-box"></div>
+          <div class="scan-line"></div>
+          <span class="cam-label">● LIVE</span>
+        </div>
+        <div class="alert-popup">🚨 Motion Detected! Snapshot sent.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stat-card">
+      <span class="stat-icon">🎯</span>
+      <span class="stat-num">ROI</span>
+      <span class="stat-desc">Region-based Detection</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-icon">⚡</span>
+      <span class="stat-num">Instant</span>
+      <span class="stat-desc">Telegram Alerts</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-icon">🗄️</span>
+      <span class="stat-num">SQLite</span>
+      <span class="stat-desc">Auto DB Logging</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-icon">📱</span>
+      <span class="stat-num">IP Cam</span>
+      <span class="stat-desc">Phone as Camera</span>
+    </div>
+  </section>
+
+  <!-- QUICK OVERVIEW -->
+  <section class="section">
+    <h2 class="section-title">What is PhoneGuard?</h2>
+    <p class="section-desc">PhoneGuard is a Python-based CCTV system that uses your phone's camera (via IP Webcam app) to detect motion in a specific area and instantly alerts you on Telegram with a photo snapshot.</p>
+    <div class="cards-row">
+      <div class="card">
+        <div class="card-icon">📱</div>
+        <h3>Phone as Camera</h3>
+        <p>Use any Android phone as a surveillance camera over Wi-Fi using the IP Webcam app.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎯</div>
+        <h3>Smart Zone Detection</h3>
+        <p>Draw a box on screen to select exactly which area to monitor. Only alerts on motion inside that zone.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🤖</div>
+        <h3>Telegram Bot Alerts</h3>
+        <p>Sends you a photo the moment motion is detected. Use /check command to verify everything is working.</p>
+      </div>
+    </div>
+    <div class="center-btn">
+      <a href="features.html" class="btn-green">See All Features →</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>📷 PhoneGuard &nbsp;|&nbsp; MIT License &nbsp;|&nbsp; Built with Python & OpenCV</p>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="features.html">Features</a>
+      <a href="setup.html">Setup</a>
+      <a href="alerts.html">Alerts</a>
+    </div>
+  </footer>
+
+  <script src="static/js/main.js"></script>
+</body>
+</html>

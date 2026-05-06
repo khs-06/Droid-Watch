@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Features - PhoneGuard</title>
+  <link rel="stylesheet" href="static/css/style.css"/>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-brand">📷 PhoneGuard</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="features.html" class="active">Features</a></li>
+      <li><a href="how-it-works.html">How It Works</a></li>
+      <li><a href="setup.html">Setup</a></li>
+      <li><a href="alerts.html">Alerts Log</a></li>
+    </ul>
+    <button class="nav-toggle" onclick="toggleMenu()">☰</button>
+  </nav>
+
+  <div class="page-header">
+    <h1>Features</h1>
+    <p>Everything PhoneGuard can do for you</p>
+  </div>
+
+  <section class="section">
+    <div class="features-list">
+
+      <div class="feature-row">
+        <div class="feature-icon-big">📱</div>
+        <div class="feature-text">
+          <h3>Phone Camera as CCTV</h3>
+          <p>Install the free <strong>IP Webcam</strong> app on your Android phone and it becomes a wireless camera. PhoneGuard connects to it over your Wi-Fi network — no cables, no extra hardware needed.</p>
+          <span class="feature-tag">IP Webcam App</span>
+          <span class="feature-tag">Wi-Fi Streaming</span>
+        </div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-icon-big">🎯</div>
+        <div class="feature-text">
+          <h3>Region of Interest (ROI) Selection</h3>
+          <p>Run <code>ROI_point_finder.py</code> and a fullscreen overlay appears. Click and drag to draw a box around exactly the area you want to monitor. Only motion inside that box triggers alerts.</p>
+          <span class="feature-tag">Visual GUI Tool</span>
+          <span class="feature-tag">Zero False Alerts</span>
+        </div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-icon-big">🔍</div>
+        <div class="feature-text">
+          <h3>Background Subtraction Detection</h3>
+          <p>Uses OpenCV's MOG2 background subtractor to detect moving objects. Only triggers when an object is detected for multiple consecutive frames — avoiding false alerts from lighting changes.</p>
+          <span class="feature-tag">OpenCV MOG2</span>
+          <span class="feature-tag">Persistence Threshold</span>
+          <span class="feature-tag">10s Cooldown</span>
+        </div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-icon-big">🚨</div>
+        <div class="feature-text">
+          <h3>Instant Telegram Alerts with Snapshot</h3>
+          <p>The moment motion is confirmed, PhoneGuard captures a photo of the frame and sends it to your Telegram chat with the caption <em>"🚨 Motion Detected! 📱 Phone Camera Alert"</em>.</p>
+          <span class="feature-tag">Photo Snapshot</span>
+          <span class="feature-tag">Telegram Bot</span>
+        </div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-icon-big">⚠️</div>
+        <div class="feature-text">
+          <h3>Camera Disconnect Alert</h3>
+          <p>If the phone camera stream is lost or disconnects, PhoneGuard immediately sends a Telegram text message warning you to check your phone.</p>
+          <span class="feature-tag">Connection Monitoring</span>
+          <span class="feature-tag">Auto Retry</span>
+        </div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-icon-big">🗄️</div>
+        <div class="feature-text">
+          <h3>SQLite Database Logging</h3>
+          <p>Every alert is automatically saved to <code>motion_alerts.db</code> with the timestamp, photo path, and message. The database is created automatically — no setup needed.</p>
+          <span class="feature-tag">Auto-created DB</span>
+          <span class="feature-tag">Timestamp Logging</span>
+        </div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-icon-big">🤖</div>
+        <div class="feature-text">
+          <h3>Telegram Bot Command: /check</h3>
+          <p>Type <code>/check</code> in Telegram and the bot replies with your current configuration — camera URL, ROI coordinates, and Chat ID. Quick way to verify everything is set up correctly.</p>
+          <span class="feature-tag">/check Command</span>
+          <span class="feature-tag">Live Config Status</span>
+        </div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-icon-big">📊</div>
+        <div class="feature-text">
+          <h3>CSV Export of All Alerts</h3>
+          <p>Run <code>show_alerts.py</code> to print all past alerts from the database and automatically export them to <code>alerts_export.csv</code> for review or analysis.</p>
+          <span class="feature-tag">CSV Export</span>
+          <span class="feature-tag">Alert History</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <p>📷 PhoneGuard &nbsp;|&nbsp; MIT License &nbsp;|&nbsp; Built with Python & OpenCV</p>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="features.html">Features</a>
+      <a href="setup.html">Setup</a>
+      <a href="alerts.html">Alerts</a>
+    </div>
+  </footer>
+
+  <script src="static/js/main.js"></script>
+</body>
+</html>

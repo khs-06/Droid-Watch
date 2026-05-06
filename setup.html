@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Setup - PhoneGuard</title>
+  <link rel="stylesheet" href="static/css/style.css"/>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-brand">📷 PhoneGuard</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="features.html">Features</a></li>
+      <li><a href="how-it-works.html">How It Works</a></li>
+      <li><a href="setup.html" class="active">Setup</a></li>
+      <li><a href="alerts.html">Alerts Log</a></li>
+    </ul>
+    <button class="nav-toggle" onclick="toggleMenu()">☰</button>
+  </nav>
+
+  <div class="page-header">
+    <h1>Setup Guide</h1>
+    <p>Get PhoneGuard running in a few minutes</p>
+  </div>
+
+  <section class="section">
+
+    <!-- REQUIREMENTS -->
+    <h2 class="section-title">Requirements</h2>
+    <div class="req-grid">
+      <div class="req-card">
+        <span class="req-icon">🐍</span>
+        <strong>Python 3.8+</strong>
+        <span>Required to run all scripts</span>
+      </div>
+      <div class="req-card">
+        <span class="req-icon">📱</span>
+        <strong>Android Phone</strong>
+        <span>With IP Webcam app installed</span>
+      </div>
+      <div class="req-card">
+        <span class="req-icon">📶</span>
+        <strong>Same Wi-Fi</strong>
+        <span>Phone & PC on same network</span>
+      </div>
+      <div class="req-card">
+        <span class="req-icon">🤖</span>
+        <strong>Telegram Account</strong>
+        <span>To receive alerts</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- INSTALLATION STEPS -->
+    <h2 class="section-title">Installation</h2>
+
+    <div class="setup-step">
+      <div class="setup-step-header">
+        <span class="setup-num">Step 1</span>
+        <h3>Clone the Repository</h3>
+      </div>
+      <div class="code-block">
+        <div class="code-header">
+          <span>bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>git clone https://github.com/whitehatboy005/Motion-Detection-Alert-System-for-CCTV
+cd Motion-Detection-Alert-System-for-CCTV</pre>
+      </div>
+    </div>
+
+    <div class="setup-step">
+      <div class="setup-step-header">
+        <span class="setup-num">Step 2</span>
+        <h3>Install Dependencies</h3>
+      </div>
+      <div class="code-block">
+        <div class="code-header">
+          <span>bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>pip install -r requirements.txt</pre>
+      </div>
+      <p class="setup-note">This installs: opencv-python, requests, python-dotenv, PyAutoGUI, pillow, python-telegram-bot</p>
+    </div>
+
+    <div class="setup-step">
+      <div class="setup-step-header">
+        <span class="setup-num">Step 3</span>
+        <h3>Get Your Telegram Chat ID</h3>
+      </div>
+      <p>Open Telegram and message <strong>@GetMyChatID_Bot</strong>. It will reply with your Chat ID number. Save it — you'll need it in the next step.</p>
+    </div>
+
+    <div class="setup-step">
+      <div class="setup-step-header">
+        <span class="setup-num">Step 4</span>
+        <h3>Find Your ROI Coordinates</h3>
+      </div>
+      <div class="code-block">
+        <div class="code-header">
+          <span>bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>python ROI_point_finder.py</pre>
+      </div>
+      <p class="setup-note">A fullscreen overlay appears. Click and drag to draw your detection zone. The coordinates will print in the terminal.</p>
+    </div>
+
+    <div class="setup-step">
+      <div class="setup-step-header">
+        <span class="setup-num">Step 5</span>
+        <h3>Edit config.env</h3>
+      </div>
+      <div class="code-block">
+        <div class="code-header">
+          <span>bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>notepad config.env</pre>
+      </div>
+      <div class="code-block">
+        <div class="code-header">
+          <span>config.env</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>CHAT_ID = your_chat_id_here
+ROI_START_POINT = 100,100
+ROI_END_POINT = 400,300
+IP_CAMERA_URL = http://192.168.x.x:8080/video</pre>
+      </div>
+    </div>
+
+    <div class="setup-step">
+      <div class="setup-step-header">
+        <span class="setup-num">Step 6</span>
+        <h3>Start Telegram Bot</h3>
+      </div>
+      <p>Open Telegram → Search <strong>@CAMSEC_AlertBot</strong> → Press <strong>START</strong>. This is required before running the script.</p>
+    </div>
+
+    <div class="setup-step">
+      <div class="setup-step-header">
+        <span class="setup-num">Step 7</span>
+        <h3>Start IP Webcam on Your Phone</h3>
+      </div>
+      <p>Open the <strong>IP Webcam</strong> app on your Android phone → scroll to bottom → tap <strong>"Start Server"</strong>. Note the IP address shown on screen and use it as your <code>IP_CAMERA_URL</code>.</p>
+    </div>
+
+    <div class="setup-step">
+      <div class="setup-step-header">
+        <span class="setup-num">Step 8</span>
+        <h3>Run the Main Program</h3>
+      </div>
+      <div class="code-block">
+        <div class="code-header">
+          <span>bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>python Phone_Alert.py</pre>
+      </div>
+      <div class="success-box">
+        ✅ A live camera window opens. Motion in your ROI will trigger a Telegram alert!
+      </div>
+    </div>
+
+    <div class="setup-step">
+      <div class="setup-step-header">
+        <span class="setup-num">Optional</span>
+        <h3>Verify Configuration</h3>
+      </div>
+      <p>While the script is running, open Telegram and type <strong>/check</strong> to the bot. It will reply with your current settings.</p>
+      <div class="code-block">
+        <div class="code-header">
+          <span>Telegram</span>
+        </div>
+        <pre>/check</pre>
+      </div>
+    </div>
+
+    <div class="setup-step">
+      <div class="setup-step-header">
+        <span class="setup-num">Optional</span>
+        <h3>View Past Alerts</h3>
+      </div>
+      <div class="code-block">
+        <div class="code-header">
+          <span>bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>python show_alerts.py</pre>
+      </div>
+      <p class="setup-note">Prints all logged alerts and exports them to <code>alerts_export.csv</code></p>
+    </div>
+
+  </section>
+
+  <footer>
+    <p>📷 PhoneGuard &nbsp;|&nbsp; MIT License &nbsp;|&nbsp; Built with Python & OpenCV</p>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="features.html">Features</a>
+      <a href="setup.html">Setup</a>
+      <a href="alerts.html">Alerts</a>
+    </div>
+  </footer>
+
+  <script src="static/js/main.js"></script>
+</body>
+</html>

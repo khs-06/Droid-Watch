@@ -1,9 +1,9 @@
-#  📸 IP Camera Motion Detection with Telegram Alerts
+#  � Phone Camera Motion Detection with Telegram Alerts
 [![License](https://img.shields.io/github/license/whitehatboy005/Motion-Detection-Alert-System-for-CCTV)](LICENSE.md)
 
 This repository contains two main tools:
 1. **ROI Selector Tool**: A graphical tool to help users easily select a Region of Interest (ROI) from the screen.
-2. **IP Camera Motion Detection Tool**: A CCTV-like system that monitors an IP camera feed for motion within the defined ROI and sends alerts via Telegram.
+2. **Phone Camera Motion Detection Tool**: A mobile surveillance system that monitors your phone's camera feed for motion within the defined ROI and sends alerts via Telegram.
 
 ##  🚀 Features
 ### 1. ROI Point Finder Tool:
@@ -11,11 +11,12 @@ This repository contains two main tools:
 - Print the start and end coordinates of the ROI for use in motion detection.
 - Simplifies the process of defining an ROI for motion detection.
 
-### 2. IP Camera Motion Detection Tool:
-- **Monitor an IP camera stream**: Detect motion in a specified area of the video feed (ROI).
+### 2. Phone Camera Motion Detection Tool:
+- **Monitor your phone's camera**: Use IP Webcam apps to stream your phone's camera and detect motion in a specified area.
 - **Send Telegram alerts**: When motion is detected, a snapshot of the frame is sent to a Telegram chat.
-- **Configurable settings**: Set up the Telegram Bot Token, IP Camera URL, and ROI coordinates via environment variables.
+- **Configurable settings**: Set up the Telegram Bot Token, Phone Camera URL, and ROI coordinates via environment variables.
 - **Efficient motion detection**: Only monitors motion within the defined ROI to minimize unnecessary alerts.
+- **Database logging**: All alerts are logged to a local SQLite database for historical tracking and analysis.
 #
 ## 📌 Instructions
 To get Chat ID visit [@GetMyChatID_Bot](https://t.me/GetMyChatID_Bot) Now you will copy the chat Id and config it.
@@ -44,15 +45,30 @@ pip install -r requirements.txt
 python ROI_point_finder.py
 ```
 ## Configure Environment Variables
+Create or edit `config.env` and set your values (replace placeholders):
+
+```text
+BOT_TOKEN=123456:ABCdefGhIJKlmNoPQRsTuvWxYZ
+CHAT_ID=123456789
+ROI_START_POINT=100,100
+ROI_END_POINT=400,300
+IP_CAMERA_URL=http://192.168.x.x:8080/video
+```
+
+Edit the file with:
+
 ```bash
 notepad config.env
 ```
+
 ## Ensure start the bot
+## Database
+The project uses SQLite (built-in with Python) to log all motion alerts. The database file `motion_alerts.db` will be created automatically. You can query it using any SQLite browser or Python scripts for analysis.
 Start it --> [@SecurityAlertBot](http://t.me/CAMSEC_AlertBot)
 #
 ## Run the main Program
 ```bash
-python CCTV_Alert.py
+python Phone_Alert.py
 ```
 #
 ## To check on configuration in Telegram

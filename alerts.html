@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alerts Log - PhoneGuard</title>
+  <link rel="stylesheet" href="static/css/style.css"/>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-brand">📷 PhoneGuard</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="features.html">Features</a></li>
+      <li><a href="how-it-works.html">How It Works</a></li>
+      <li><a href="setup.html">Setup</a></li>
+      <li><a href="alerts.html" class="active">Alerts Log</a></li>
+    </ul>
+    <button class="nav-toggle" onclick="toggleMenu()">☰</button>
+  </nav>
+
+  <div class="page-header">
+    <h1>Alerts Log</h1>
+    <p>History of all motion detection alerts</p>
+  </div>
+
+  <section class="section">
+
+    <!-- INFO BOX -->
+    <div class="info-box">
+      💡 This page shows the alert history from <code>motion_alerts.db</code>. In a live deployment, this would connect to the SQLite database. Below is a sample view of what your alerts look like.
+    </div>
+
+    <!-- STATS ROW -->
+    <div class="alert-stats">
+      <div class="alert-stat-card">
+        <span class="big-num" id="total-count">1</span>
+        <span>Total Alerts</span>
+      </div>
+      <div class="alert-stat-card">
+        <span class="big-num" id="today-count">1</span>
+        <span>Today</span>
+      </div>
+      <div class="alert-stat-card">
+        <span class="big-num">SQLite</span>
+        <span>Storage</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- TABLE -->
+    <h2 class="section-title">Alert Records</h2>
+    <p style="color:#666;margin-bottom:20px;">Data from <code>motion_alerts.db</code> → exported via <code>show_alerts.py</code></p>
+
+    <div class="table-wrap">
+      <table class="alerts-table" id="alerts-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Timestamp</th>
+            <th>Photo Path</th>
+            <th>Message</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="alerts-body">
+          <!-- filled by JS -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- DB SCHEMA -->
+    <h2 class="section-title">Database Schema</h2>
+    <p style="color:#666;margin-bottom:16px;">The <code>alerts</code> table structure in <code>motion_alerts.db</code></p>
+    <div class="code-block">
+      <div class="code-header"><span>SQL</span></div>
+      <pre>CREATE TABLE IF NOT EXISTS alerts (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    timestamp   TEXT    NOT NULL,
+    photo_path  TEXT,
+    message     TEXT
+);</pre>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- HOW TO VIEW -->
+    <h2 class="section-title">How to View Your Alerts</h2>
+    <div class="cards-row">
+      <div class="card">
+        <div class="card-icon">🖥️</div>
+        <h3>Terminal</h3>
+        <p>Run <code>python show_alerts.py</code> to print all alerts in the terminal and auto-export to CSV.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <h3>CSV File</h3>
+        <p>Open <code>alerts_export.csv</code> in Excel or Google Sheets for easy viewing and sorting.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🗄️</div>
+        <h3>DB Browser</h3>
+        <p>Use <strong>DB Browser for SQLite</strong> (free app) to open <code>motion_alerts.db</code> and browse records visually.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <footer>
+    <p>📷 PhoneGuard &nbsp;|&nbsp; MIT License &nbsp;|&nbsp; Built with Python & OpenCV</p>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="features.html">Features</a>
+      <a href="setup.html">Setup</a>
+      <a href="alerts.html">Alerts</a>
+    </div>
+  </footer>
+
+  <script src="static/js/main.js"></script>
+  <script>
+    // Sample alert data from the CSV export
+    const alertData = [
+      { id: 1, timestamp: "2026-03-17T16:59:20.660508", photo: "sample.jpg", message: "Sample alert" }
+    ];
+
+    function renderAlerts() {
+      const tbody = document.getElementById('alerts-body');
+      if (alertData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#999;padding:32px">No alerts logged yet. Run the motion detection script to start logging.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = alertData.map(a => `
+        <tr>
+          <td>${a.id}</td>
+          <td>${formatTime(a.timestamp)}</td>
+          <td><code>${a.photo}</code></td>
+          <td>${a.message}</td>
+          <td><span class="status-badge">✅ Sent</span></td>
+        </tr>
+      `).join('');
+      document.getElementById('total-count').textContent = alertData.length;
+      const today = new Date().toDateString();
+      const todayCount = alertData.filter(a => new Date(a.timestamp).toDateString() === today).length;
+      document.getElementById('today-count').textContent = todayCount;
+    }
+
+    function formatTime(ts) {
+      try {
+        const d = new Date(ts);
+        return d.toLocaleString();
+      } catch(e) { return ts; }
+    }
+
+    renderAlerts();
+  </script>
+</body>
+</html>
